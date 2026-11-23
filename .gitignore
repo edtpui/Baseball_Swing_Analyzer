@@ -1,0 +1,11 @@
+# Python environment and caches
+app/.venv/
+__pycache__/
+.pytest_cache/
+
+# Recorded swings and settings
+app/data/
+
+# Dashboard build output and dependencies
+app/web/node_modules/
+app/web/dist/

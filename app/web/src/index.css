@@ -1,0 +1,235 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Swing Analyzer theme (Tailwind v4: the theme lives here, there is no
+   tailwind.config.js).
+
+   Every colour is a semantic token backed by a CSS variable, so components
+   never name a raw colour and light/dark is a variable swap, not a second set
+   of classes. Usage: bg-surface, text-ink-muted, border-line, text-series-bat.
+
+   The two chart series colours are checked for colour-blind separation and
+   contrast against both chart surfaces; re-run the check if you change them.
+   --------------------------------------------------------------------------- */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  /* System fonts only: the app runs on a laptop at the field, often offline. */
+  --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Cascadia Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+  --text-hero: 4rem;
+  --text-hero--line-height: 1;
+
+  --radius-sm: 3px;
+  --radius-md: 5px;
+  --radius-lg: 8px;
+
+  /* Surfaces */
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-hover: var(--surface-hover);
+
+  /* Ink */
+  --color-ink: var(--ink);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-muted: var(--ink-muted);
+
+  /* Lines */
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  /* Interactive accent */
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-subtle: var(--accent-subtle);
+
+  /* Data series: colour follows the measurement, never its position */
+  --color-series-bat: var(--series-bat);
+  --color-series-hand: var(--series-hand);
+
+  /* Status: reserved for state, never used for a data series */
+  --color-good: var(--good);
+  --color-warning: var(--warning);
+  --color-critical: var(--critical);
+
+  /* 3D scene */
+  --color-scene-bat: var(--scene-bat);
+  --color-scene-grid: var(--scene-grid);
+}
+
+:root {
+  --page: #f4f4f1;
+  --surface: #fcfcfb;
+  --surface-sunken: #f0efec;
+  --surface-hover: #ecebe6;
+
+  --ink: #0b0b0b;
+  --ink-secondary: #52514e;
+  --ink-muted: #6f6d67;
+
+  --line: #e1e0d9;
+  --line-strong: #c3c2b7;
+
+  --accent: #256abf;
+  --accent-hover: #1c5cab;
+  --accent-ink: #ffffff;
+  --accent-subtle: #e3eefb;
+
+  --series-bat: #2a78d6;
+  --series-hand: #eb6834;
+
+  --good: #0a7d0a;
+  --warning: #9a6400;
+  --critical: #c23030;
+
+  --scene-bat: #b9966a;
+  --scene-grid: #d4d3cb;
+
+  color-scheme: light;
+}
+
+.dark {
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --surface-sunken: #131312;
+  --surface-hover: #262624;
+
+  --ink: #f0efec;
+  --ink-secondary: #c3c2b7;
+  --ink-muted: #96948d;
+
+  --line: #2c2c2a;
+  --line-strong: #454541;
+
+  --accent: #3987e5;
+  --accent-hover: #5598e7;
+  --accent-ink: #0b0b0b;
+  --accent-subtle: #17263a;
+
+  --series-bat: #3987e5;
+  --series-hand: #d95926;
+
+  --good: #2fb52f;
+  --warning: #fab219;
+  --critical: #ee6a6a;
+
+  --scene-bat: #c9a878;
+  --scene-grid: #333330;
+
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    background-color: var(--page);
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--page);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  button:not(:disabled),
+  [role="button"],
+  summary {
+    cursor: pointer;
+  }
+
+  dialog::backdrop {
+    background-color: rgb(0 0 0 / 0.45);
+  }
+}
+
+@layer components {
+  /* A bordered content region. Flat: hierarchy comes from the hairline, not a shadow. */
+  .panel {
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+
+  .panel-title {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-secondary);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    height: 2rem;
+    padding: 0 0.75rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    background-color: var(--surface);
+    color: var(--ink);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color 120ms;
+  }
+  .btn:hover:not(:disabled) {
+    background-color: var(--surface-hover);
+  }
+  .btn:disabled {
+    color: var(--ink-muted);
+    opacity: 0.6;
+  }
+
+  .btn-primary {
+    border-color: var(--accent);
+    background-color: var(--accent);
+    color: var(--accent-ink);
+  }
+  .btn-primary:hover:not(:disabled) {
+    border-color: var(--accent-hover);
+    background-color: var(--accent-hover);
+  }
+
+  .btn-icon {
+    width: 2rem;
+    padding: 0;
+  }
+
+  .field {
+    height: 2rem;
+    width: 100%;
+    padding: 0 0.5rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    background-color: var(--surface);
+    color: var(--ink);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "swing-analyzer-simulated",
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": [
+        "-NoProfile",
+        "-Command",
+        "Set-Location 'C:\\Arduino\\Baseball_Swing_Analyzer\\app'; & .\\.venv\\Scripts\\python.exe -m server --simulate --port 8765 --data-dir \"$env:TEMP\\swing-analyzer-demo\""
+      ],
+      "port": 8765
+    }
+  ]
+}
