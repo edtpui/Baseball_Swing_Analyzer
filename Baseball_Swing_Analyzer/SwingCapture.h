@@ -24,7 +24,8 @@ class SwingCapture {
  public:
   void setThresholds(uint16_t startDps, uint16_t minPeakDps);
 
-  // Forgets history after a gap in the sample stream.
+  // Forgets history after a gap in the sample stream, and re-arms only once
+  // the bat has been quiet for REARM_QUIET_SAMPLES.
   void reset();
 
   // Stores one sample. Returns true when `result` describes a finished swing.

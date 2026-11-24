@@ -284,7 +284,10 @@ void handleCommands() {
         }
         break;
       case proto::CMD_RESEND_SWING:
-        if (swingBlobLen > 0 && !ble.transferActive()) {
+        // The laptop asks after a failed or stalled transfer and has dropped
+        // what it received, so start again from the START packet even if the
+        // current attempt is still retrying.
+        if (swingBlobLen > 0) {
           ble.startTransfer(swingBlob, swingBlobLen, swingBlobId);
         }
         break;

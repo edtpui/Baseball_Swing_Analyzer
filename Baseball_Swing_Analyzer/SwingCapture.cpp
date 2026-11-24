@@ -29,7 +29,10 @@ void SwingCapture::setThresholds(uint16_t startDps, uint16_t minPeakDps) {
 }
 
 void SwingCapture::reset() {
-  _state = proto::STATE_IDLE;
+  // Wait for the bat to be quiet before arming: a gap in the middle of a swing
+  // must not start a new, truncated one.
+  _state = proto::STATE_SETTLING;
+  _quiet = 0;
   _validFrom = _count;
   _hasPrev = false;
   _confirm = 0;
