@@ -3,6 +3,10 @@
 A bat-knob motion sensor and a laptop app that shows bat speed, swing path and a
 live 3D view of the bat.
 
+![Swing Analyzer dashboard: 3D bat view and a swing's bat speed](docs/images/dashboard.png)
+
+*The laptop dashboard replaying a swing (simulated sensor): 3D bat view, bat speed at the sweet spot, and the speed chart through contact.*
+
 ```
 Baseball_Swing_Analyzer/   firmware for the sensor (Arduino sketch)
 app/server/                laptop server: Bluetooth link, swing maths, storage
